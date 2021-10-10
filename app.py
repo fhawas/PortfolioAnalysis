@@ -11,11 +11,12 @@ import streamlit as st
 import plotly.express as px
 
 click = st.button('Run')
-data_file = st.file_uploader('Upload File', type="xlsx")
+data_index = st.file_uploader('Upload Index', type="csv")
+data_portfolio = st.file_uploader('Upload Portfolio', type="csv")
 
 if click:
-    index_data = pd.read_excel(data_file,sheet_name='Index')
-    portfolio_data = pd.read_excel(data_file,sheet_name='Portfolio')
+    index_data = pd.read_csv(data_index)
+    portfolio_data = pd.read_csv(data_portfolio)
     log_index = np.log(index_data.loc[:,index_data.columns != 'Fecha'].values.T)
     portfolio = portfolio_data.values
     return_index = log_index[:,1:] - log_index[:,:-1]
@@ -30,4 +31,3 @@ if click:
     fig = px.bar(data[data['RiskShare']!=0], x='Index', y='RiskShare')
     st.plotly_chart(fig)
     st.write('Monthly Standard Deviation: '+str(np.round(std[0][0]*100,2)))
-    #st.table(data['RiskShare'].sum())

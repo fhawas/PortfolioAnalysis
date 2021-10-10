@@ -1,3 +1,4 @@
+python == 3.7.4
 streamlit==1.0.0
 plotly==4.14.3
 pandas==1.0.4
